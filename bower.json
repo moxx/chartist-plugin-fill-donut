@@ -1,0 +1,29 @@
+{
+  "name": "chartist-plugin-fill-donut",
+  "version": "0.0.1",
+  "authors": [
+    "moxx <mo@sbg.at>"
+  ],
+  "description": "Chartist plugin for fill donuts, useful for donuts with animations",
+  "main": "",
+  "moduleType": [],
+  "keywords": [
+    "chartist",
+    "chartist-plugin",
+    "filldonut",
+    "fill-donuts",
+    "fill-donut"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/moxx/chartist-plugin-fill-donut",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "chartist": "~0.9.4"
+  }
+}
