@@ -1,6 +1,6 @@
-# Tooltip plugin for Chartist.js
+# FillDonut plugin for Chartist.js
 
-This plugin provides a hacky way to fill a donut before pie animation will start and add multiple html or text to the chart on differend positions.
+This plugin provides a hacky way to fill a donut before the animation will start. Also on board is a way to add multiple html or text elements to the Donut on different positions.
 Plugin will just work with Chartist Pie charts.
 
 Please visit http://gionkunz.github.io/chartist-js/plugins.html for more information.
@@ -42,18 +42,18 @@ var chart = new Chartist.Pie('#chart-e1', {
               showLabel: false,
               plugins: [
                   Chartist.plugins.fillDonut({
-                      items: [{
+                      items: [{ //Item 1
                           content: '<i class="fa fa-tachometer text-muted"></span>',
                           position: 'bottom',
                           offsetY : 10,
                           offsetX: -2
-                      }, {
+                      }, { //Item 2
                           content: '<h3>160<span class="small">mph</span></h3>'
                       }]
                   })
               ],
           });
-
+          //Animation for the first series
           chart.on('draw', function(data) {
               if(data.type === 'slice' && data.index == 0) {
                   array animation
@@ -79,4 +79,23 @@ var chart = new Chartist.Pie('#chart-e1', {
                   data.element.animate(animationDefinition, true);
               }
           });
+```
+
+## Needs to be styled
+
+```css
+    /*make a color different to fill-donut series*/
+    .ct-chart-donut .ct-series-a .ct-slice-donut {
+        stroke: red;
+    }
+    /*make b hidden*/
+    .ct-chart-donut .ct-series-b .ct-slice-donut {
+        stroke: #efefef;
+        opacity: 0.0;
+    }
+    /*make all fill-donut series visible and set color*/
+    .ct-chart-donut .ct-fill-donut .ct-slice-donut{
+        stroke: #efefef;
+        opacity: 1;
+    }
 ```
