@@ -1,6 +1,6 @@
 {
   "name": "chartist-plugin-fill-donut",
-  "version": "0.0.1-beta",
+  "version": "0.0.1-beta2",
   "authors": [
     "moxx <mo@sbg.at>"
   ],
@@ -27,6 +27,7 @@
     "tests"
   ],
   "dependencies": {
-    "chartist": "~0.9.4"
+    "chartist": "~0.9.4",
+    "jquery": "~2.1.4"
   }
 }

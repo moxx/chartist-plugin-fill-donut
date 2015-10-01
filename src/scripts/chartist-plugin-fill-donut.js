@@ -44,7 +44,7 @@
 
                 chart.on('created', function(data){
                     $.each(options.items, function(){
-                        var $wrapper = $(options.label.html).clone();
+                        var $wrapper = $(options.label.html);
                         var item = $.extend({}, {
                             class : '',
                             id: '',

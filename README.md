@@ -1,9 +1,18 @@
 # FillDonut plugin for Chartist.js
 
-This plugin provides a hacky way to fill a donut before the animation will start. Also on board is a way to add multiple html or text elements to the Donut on different positions.
+This plugin use jQuery to provides a hacky way to fill a donut before the animation will start. Also on board is a way to add multiple html or text elements to the Donut on different positions.
 Plugin will just work with Chartist Pie charts.
 
 Please visit http://gionkunz.github.io/chartist-js/plugins.html for more information.
+
+# FillDonut plugin installation
+`bower install chartist-plugin-fill-donut --save`
+manual
+```
+download https://github.com/moxx/chartist-plugin-fill-donut/archive/master.zip
+ -> search the dist folder for needed js files
+ -> keep in mind you must also include jquery
+ -> https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
 
 ## Available options and their defaults
 
@@ -43,7 +52,7 @@ var chart = new Chartist.Pie('#chart-e1', {
               plugins: [
                   Chartist.plugins.fillDonut({
                       items: [{ //Item 1
-                          content: '<i class="fa fa-tachometer text-muted"></span>',
+                          content: '<i class="fa fa-tachometer text-muted"></i>',
                           position: 'bottom',
                           offsetY : 10,
                           offsetX: -2

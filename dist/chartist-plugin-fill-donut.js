@@ -1,2 +1,105 @@
-!function(t,e,n){"use strict";var i={fillClass:"ct-fill-donut",label:{html:'<div class="ct-fill-donut-label"></div>'},items:[{}]};n.plugins=n.plugins||{},n.plugins.fillDonut=function(t){return t=n.extend({},i,t),function(e){if(e instanceof n.Pie){var i=$(e.container);i.css("position","relative");var o;e.on("draw",function(e){if("slice"==e.type){0==e.index&&(o=i.find("svg").eq(0));var n=$(e.group._node).clone();n.attr("class",n.attr("class")+" "+t.fillClass),n.find("path").each(function(){$(this).find("animate").remove(),$(this).removeAttr("stroke-dashoffset")}),o.prepend(n)}}),e.on("created",function(e){$.each(t.items,function(){var e=$(t.label.html).clone(),n=$.extend({},{"class":"",id:"",content:"fillText",position:"center",offsetY:0,offsetX:0},this);n.id.length>0&&n.content.attr("id",n.id),n["class"].length>0&&n.content.attr("class",n["class"]),e.append(n.content).css({position:"absolute"}),i.append(e);var o=i.innerWidth()/2,s=i.height()/2,f=e.innerWidth()/2,l=e.height()/2,a={bottom:{bottom:0+n.offsetY,left:o-f+n.offsetX},top:{top:0+n.offsetY,left:o-f+n.offsetX},left:{top:s-l+n.offsetY,left:0+n.offsetX},right:{top:s-l+n.offsetY,right:0+n.offsetX},center:{top:s-l+n.offsetY,left:o-f+n.offsetX}};e.css(a[n.position])})})}}}}(window,document,Chartist);
+/**
+ * Chartist.js plugin to pre fill donouts with animations
+ * author: moxx
+ * author-url: https://github.com/moxx/chartist-plugin-fill-donut
+ *
+ */
+(function(window, document, Chartist) {
+    'use strict';
+
+    var defaultOptions = {
+        fillClass: 'ct-fill-donut',
+        label : {
+            html: '<div class="ct-fill-donut-label"></div>',
+        },
+        items : [{}]
+    };
+
+    Chartist.plugins = Chartist.plugins || {};
+    Chartist.plugins.fillDonut = function(options) {
+        options = Chartist.extend({}, defaultOptions, options);
+        return function fillDonut(chart){
+            if(chart instanceof Chartist.Pie) {
+                var $chart = $(chart.container);
+                $chart.css('position', 'relative');
+                var $svg;
+
+                chart.on('draw', function(data) {
+                    if(data.type == 'slice'){
+                        if(data.index == 0)
+                            $svg = $chart.find('svg').eq(0);
+
+                        var $clone = $(data.group._node).clone();
+                        $clone.attr('class', $clone.attr('class') + ' ' + options.fillClass);
+
+                        $clone.find('path').each(function(){
+                            $(this).find('animate').remove();
+                            $(this).removeAttr('stroke-dashoffset');
+                        });
+
+                        $svg.prepend($clone);
+
+                    }
+                });
+
+                chart.on('created', function(data){
+                    $.each(options.items, function(){
+                        var $wrapper = $(options.label.html);
+                        var item = $.extend({}, {
+                            class : '',
+                            id: '',
+                            content : 'fillText',
+                            position: 'center', //bottom, top, left, right
+                            offsetY: 0, //top, bottom in px
+                            offsetX: 0 //left, right in px
+                        }, this);
+
+                        if(item.id.length > 0)
+                            item.content.attr('id', item.id);
+                        if(item.class.length > 0)
+                            item.content.attr('class', item.class);
+
+                        $wrapper.append(item.content).css({
+                            position : 'absolute'
+                        });
+
+                        $chart.append($wrapper);
+
+                        var cWidth = $chart.innerWidth() / 2;
+                        var cHeight = $chart.height() / 2;
+                        var wWidth = $wrapper.innerWidth() / 2;
+                        var wHeight = $wrapper.height() / 2;
+
+                        var style = {
+                            bottom : {
+                                bottom : 0 + item.offsetY,
+                                left: (cWidth - wWidth) + item.offsetX,
+                            },
+                            top : {
+                                top : 0  + item.offsetY,
+                                left: (cWidth - wWidth) + item.offsetX,
+                            },
+                            left : {
+                                top : (cHeight - wHeight) + item.offsetY,
+                                left: 0 + item.offsetX,
+                            },
+                            right : {
+                                top : (cHeight - wHeight) + item.offsetY,
+                                right: 0 + item.offsetX,
+                            },
+                            center : {
+                                top : (cHeight - wHeight) + item.offsetY,
+                                left: (cWidth - wWidth) + item.offsetX,
+                            }
+                        };
+
+                        $wrapper.css(style[item.position]);
+                    });
+                });
+            }
+        }
+    }
+
+}(window, document, Chartist));
+
 //# sourceMappingURL=chartist-plugin-fill-donut.js.map
