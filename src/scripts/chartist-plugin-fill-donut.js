@@ -10,7 +10,8 @@
     var defaultOptions = {
         fillClass: 'ct-fill-donut',
         label : {
-            html: '<div class="ct-fill-donut-label"></div>',
+            html: '<div></div>',
+            class: 'ct-fill-donut-label test'
         },
         items : [{}]
     };
@@ -43,8 +44,10 @@
                 });
 
                 chart.on('created', function(data){
+                    var itemIndex = 0;
+
                     $.each(options.items, function(){
-                        var $wrapper = $(options.label.html);
+                        var $wrapper = $(options.label.html).addClass(options.label.class);
                         var item = $.extend({}, {
                             class : '',
                             id: '',
@@ -54,11 +57,17 @@
                             offsetX: 0 //left, right in px
                         }, this);
 
-                        if(item.id.length > 0)
-                            item.content.attr('id', item.id);
-                        if(item.class.length > 0)
-                            item.content.attr('class', item.class);
+                        var content = $(item.content);
 
+                        if(item.id.length > 0)
+                            $wrapper.attr('id', item.id);
+                        if(item.class.length > 0)
+                            $wrapper.addClass('class', item.class);
+
+                        $chart.find('*[data-fill-index$="fdid-'+itemIndex+'"]').remove();
+                        $wrapper.attr('data-fill-index','fdid-'+itemIndex);
+                        itemIndex++;
+                        
                         $wrapper.append(item.content).css({
                             position : 'absolute'
                         });
