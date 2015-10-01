@@ -13,6 +13,7 @@ download https://github.com/moxx/chartist-plugin-fill-donut/archive/master.zip
  -> search the dist folder for needed js files
  -> keep in mind you must also include jquery
  -> https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
+ ```
 
 ## Available options and their defaults
 
