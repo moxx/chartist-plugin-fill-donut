@@ -25,7 +25,7 @@
                 $chart.css('position', 'relative');
                 var $svg;
 
-                chart.on('draw', function(data) {
+                function drawDonut(data){
                     if(data.type == 'slice'){
                         if(data.index == 0)
                             $svg = $chart.find('svg').eq(0);
@@ -41,10 +41,19 @@
                         $svg.prepend($clone);
 
                     }
+                }
+
+                chart.on('draw', function(data) {
+                    drawDonut(data);
                 });
 
                 chart.on('created', function(data){
                     var itemIndex = 0;
+
+                    if(chart.options.fillDonutOptions){
+                        options = Chartist.extend({}, options, chart.options.fillDonutOptions);
+                        drawDonut(data);
+                    }
 
                     $.each(options.items, function(){
                         var $wrapper = $(options.label.html).addClass(options.label.class);

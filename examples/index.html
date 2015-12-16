@@ -116,6 +116,30 @@
                         data.element.animate(animationDefinition, true);
                     }
                 });
+
+            var testTimeout = function(){
+                console.log('update run');
+                chart.update({
+                        series: [245, 10 ],
+                        labels: ['', ''],
+                    },{
+                        total: 300,
+                        fillDonutOptions : {
+                            items: [{
+                                    content: '<i class="fa fa-tachometer text-muted"></i>',
+                                    position: 'bottom',
+                                    offsetY : 10,
+                                    offsetX: -2
+                                }, {
+                                    content: '<h3>190<span class="small">mph</span></h3>'
+                                }]
+                        }
+                }, true);
+                console.log(chart);
+
+            }
+
+            setTimeout(testTimeout, 3000);
         });
         </script>
     </body>
