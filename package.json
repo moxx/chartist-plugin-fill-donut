@@ -2,7 +2,7 @@
   "name": "chartist-plugin-fill-donut",
   "version": "0.0.1",
   "description": "",
-  "main": "packages.json",
+  "main": "./src/chartist-plugin-fill-donut.js",
   "private": true,
   "dependencies": {},
   "devDependencies": {
