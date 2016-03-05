@@ -46,6 +46,9 @@
                 chart.on('created', function(data){
                     var itemIndex = 0;
 
+                    if(chart.options.fillDonutOptions)
+                        options = Chartist.extend({}, options, chart.options.fillDonutOptions);
+
                     $.each(options.items, function(){
                         var $wrapper = $(options.label.html).addClass(options.label.class);
                         var item = $.extend({}, {
