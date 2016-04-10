@@ -113,4 +113,4 @@ var chart = new Chartist.Pie('#chart-e1', {
 
 ## License
 
-The # FillDonut plugin for Chartist is open-sourced software licensed under the MIT license.
+The FillDonut plugin for Chartist is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
