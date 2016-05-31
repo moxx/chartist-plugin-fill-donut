@@ -4,7 +4,22 @@
  * author-url: https://github.com/moxx/chartist-plugin-fill-donut
  *
  */
-(function(window, document, Chartist) {
+ (function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['chartist'], function (chartist) {
+            return (root.returnExportsGlobal = factory(chartist));
+        });
+    } else if (typeof exports === 'object') {
+        // Node. Does not work with strict CommonJS, but
+        // only CommonJS-like enviroments that support module.exports,
+        // like Node.
+        module.exports = factory(require('chartist'));
+    } else {
+        root['Chartist.plugins.legend'] = factory(root.Chartist);
+    }
+}
+(this, function(Chartist) {
     'use strict';
 
     var defaultOptions = {
@@ -118,6 +133,6 @@
         }
     }
 
-}(window, document, Chartist));
+}));
 
 //# sourceMappingURL=chartist-plugin-fill-donut.js.map
