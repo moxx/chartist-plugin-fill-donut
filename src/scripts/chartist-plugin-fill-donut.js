@@ -10,8 +10,8 @@
     var defaultOptions = {
         fillClass: 'ct-fill-donut',
         label: {
-            html: '<div></div>',
-            class: 'ct-fill-donut-label test'
+            html: 'div',
+            class: 'ct-fill-donut-label'
         },
         items: [{}]
     };
@@ -21,24 +21,29 @@
         options = Chartist.extend({}, defaultOptions, options);
         return function fillDonut(chart){
             if(chart instanceof Chartist.Pie) {
-                var $chart = $(chart.container);
-                $chart.css('position', 'relative');
+                var $chart = chart.container;
+                $chart.style.position = 'relative';
                 var $svg;
 
                 function drawDonut(data){
                     if(data.type == 'slice'){
                         if(data.index == 0)
-                            $svg = $chart.find('svg').eq(0);
+                            $svg = $chart.querySelector('svg');
 
-                        var $clone = $(data.group._node).clone();
-                        $clone.attr('class', $clone.attr('class') + ' ' + options.fillClass);
-
-                        $clone.find('path').each(function(){
-                            $(this).find('animate').remove();
-                            $(this).removeAttr('stroke-dashoffset');
+                        var $clone = data.group._node.cloneNode(true);
+                        options.fillClass.split(" ").forEach(function(className) {
+                            $clone.setAttribute('class', $clone.getAttribute('class') + ' ' + className);
                         });
 
-                        $svg.prepend($clone);
+                        [].forEach.call($clone.querySelectorAll('path'), function(el){
+                            [].forEach.call(el.querySelectorAll('animate'), function(node) {
+                                node.parentNode.removeChild(node);
+                            });
+                            
+                            el.removeAttribute('stroke-dashoffset');
+                        });
+
+                        $svg.insertBefore($clone, $svg.children[0]);
 
                     }
                 }
@@ -55,63 +60,66 @@
                         drawDonut(data);
                     }
 
-                    $.each(options.items, function(){
-                        var $wrapper = $(options.label.html).addClass(options.label.class);
-                        var item = $.extend({}, {
+                    [].forEach.call(options.items, function(thisItem){
+                        var $wrapper = document.createElement(options.label.html);
+                        options.label.class.split(" ").forEach(function(className) {
+                            $wrapper.classList.add(className);
+                        });
+                        var item = Chartist.extend({}, {
                             class: '',
                             id: '',
                             content: 'fillText',
                             position: 'center', //bottom, top, left, right
                             offsetY: 0, //top, bottom in px
                             offsetX: 0 //left, right in px
-                        }, this);
+                        }, thisItem);
 
-                        var content = $(item.content);
+                        var content = item.content;
 
                         if(item.id.length > 0)
-                            $wrapper.attr('id', item.id);
+                            $wrapper.setAttribute('id', item.id);
                         if(item.class.length > 0)
-                            $wrapper.addClass('class', item.class);
+                            $wrapper.setAttribute('class', item.class);
 
-                        $chart.find('*[data-fill-index$="fdid-'+itemIndex+'"]').remove();
-                        $wrapper.attr('data-fill-index','fdid-'+itemIndex);
-                        itemIndex++;
-                        
-                        $wrapper.append(item.content).css({
-                            position : 'absolute'
+                        [].forEach.call($chart.querySelectorAll('*[data-fill-index$="fdid-'+itemIndex+'"]'), function(node){
+                            node.parentNode.removeChild(node);
                         });
+                        $wrapper.setAttribute('data-fill-index','fdid-'+itemIndex);
+                        itemIndex++;
 
-                        $chart.append($wrapper);
+                        $wrapper.insertAdjacentHTML('beforeend', item.content);
+                        $wrapper.style.position = 'absolute';
+                        $chart.appendChild($wrapper);
 
-                        var cWidth = $chart.innerWidth() / 2;
-                        var cHeight = $chart.height() / 2;
-                        var wWidth = $wrapper.innerWidth() / 2;
-                        var wHeight = $wrapper.height() / 2;
+                        var cWidth = Math.ceil($chart.offsetWidth / 2);
+                        var cHeight = Math.ceil($chart.clientHeight / 2);
+                        var wWidth = Math.ceil($wrapper.offsetWidth / 2);
+                        var wHeight = Math.ceil($wrapper.clientHeight / 2);
 
                         var style = {
                             bottom: {
-                                bottom: 0 + item.offsetY,
-                                left: (cWidth - wWidth) + item.offsetX,
+                                bottom: 0 + item.offsetY + "px",
+                                left: (cWidth - wWidth) + item.offsetX + "px",
                             },
                             top: {
-                                top: 0  + item.offsetY,
-                                left: (cWidth - wWidth) + item.offsetX,
+                                top: 0  + item.offsetY + "px",
+                                left: (cWidth - wWidth) + item.offsetX + "px",
                             },
                             left: {
-                                top: (cHeight - wHeight) + item.offsetY,
-                                left: 0 + item.offsetX,
+                                top: (cHeight - wHeight) + item.offsetY + "px",
+                                left: 0 + item.offsetX + "px",
                             },
                             right: {
-                                top: (cHeight - wHeight) + item.offsetY,
-                                right: 0 + item.offsetX,
+                                top: (cHeight - wHeight) + item.offsetY + "px",
+                                right: 0 + item.offsetX + "px",
                             },
                             center: {
-                                top: (cHeight - wHeight) + item.offsetY,
-                                left: (cWidth - wWidth) + item.offsetX,
+                                top: (cHeight - wHeight) + item.offsetY + "px",
+                                left: (cWidth - wWidth) + item.offsetX + "px",
                             }
                         };
-
-                        $wrapper.css(style[item.position]);
+        
+                        Object.assign($wrapper.style, style[item.position]);
                     });
                 });
             }
