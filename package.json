@@ -3,7 +3,9 @@
   "version": "0.0.2",
   "description": "",
   "main": "./dist/chartist-plugin-fill-donut.js",
-  "dependencies": {},
+  "dependencies": {
+    "gulp-umd": "^0.2.0"
+  },
   "devDependencies": {
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.5.2",

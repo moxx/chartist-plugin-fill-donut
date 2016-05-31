@@ -1,25 +1,19 @@
+;(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory();
+  } else {
+    root['Chartist.plugins.fillDonut'] = factory();
+  }
+}(this, function() {
 /**
  * Chartist.js plugin to pre fill donuts with animations
  * author: moxx
  * author-url: https://github.com/moxx/chartist-plugin-fill-donut
  *
  */
- (function (root, factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(['chartist'], function (chartist) {
-            return (root.returnExportsGlobal = factory(chartist));
-        });
-    } else if (typeof exports === 'object') {
-        // Node. Does not work with strict CommonJS, but
-        // only CommonJS-like enviroments that support module.exports,
-        // like Node.
-        module.exports = factory(require('chartist'));
-    } else {
-        root['Chartist.plugins.legend'] = factory(root.Chartist);
-    }
-}
-(this, function(Chartist) {
+(function(window, document, Chartist) {
     'use strict';
 
     var defaultOptions = {
@@ -133,6 +127,9 @@
         }
     }
 
+}(window, document, Chartist));
+
+return Chartist.plugins.fillDonut;
 }));
 
 //# sourceMappingURL=chartist-plugin-fill-donut.js.map
