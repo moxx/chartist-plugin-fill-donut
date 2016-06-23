@@ -43,7 +43,7 @@
                             el.removeAttribute('stroke-dashoffset');
                         });
 
-                        $svg.insertBefore($clone, $svg.children[0]);
+                        $svg.insertBefore($clone, $svg.childNodes[0]);
 
                     }
                 }
