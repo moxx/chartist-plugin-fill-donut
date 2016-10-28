@@ -39,7 +39,7 @@
                             [].forEach.call(el.querySelectorAll('animate'), function(node) {
                                 node.parentNode.removeChild(node);
                             });
-                            
+
                             el.removeAttribute('stroke-dashoffset');
                         });
 
@@ -118,7 +118,7 @@
                                 left: (cWidth - wWidth) + item.offsetX + "px",
                             }
                         };
-        
+
                         Object.assign($wrapper.style, style[item.position]);
                     });
                 });

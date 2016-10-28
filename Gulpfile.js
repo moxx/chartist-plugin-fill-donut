@@ -13,6 +13,15 @@ var umdSettings = {
     exports: function(file) {
         return 'Chartist.plugins.fillDonut';
     },
+    dependencies: function(file) {
+        return [{
+            name: 'Chartist',
+            amd: 'chartist',
+            cjs: 'chartist',
+            global: 'Chartist',
+            param: 'Chartist'
+        }];
+    },
     template: path.join(__dirname, 'returnExports.js')
 };
 
