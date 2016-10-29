@@ -27,6 +27,6 @@
     "tests"
   ],
   "dependencies": {
-    "chartist": "~0.9.4"
+    "chartist": "~0.10.0"
   }
 }
