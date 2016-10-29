@@ -63,7 +63,10 @@
                     [].forEach.call(options.items, function(thisItem){
                         var $wrapper = document.createElement(options.label.html);
                         options.label.class.split(" ").forEach(function(className) {
-                            $wrapper.classList.add(className);
+                             if ($wrapper.classList)
+                              $wrapper.classList.add(className);
+                            else
+                              $wrapper.className += ' ' + className;
                         });
                         var item = Chartist.extend({}, {
                             class: '',
