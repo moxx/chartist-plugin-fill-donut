@@ -1,3 +1,6 @@
+### Status
+[![Build Status](https://api.travis-ci.org/moxx/chartist-plugin-fill-donut.png)](https://travis-ci.org/moxx/chartist-plugin-fill-donut)
+
 # FillDonut plugin for Chartist.js
 
 This plugin provides a hacky way to fill a donut before the animation will start. Also on board is a way to add multiple html or text elements to the Donut on different positions.
