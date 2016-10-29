@@ -1,12 +1,12 @@
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
-    define([], factory);
+    define(['chartist'], factory);
   } else if (typeof exports === 'object') {
-    module.exports = factory();
+    module.exports = factory(require('chartist'));
   } else {
-    root['Chartist.plugins.fillDonut'] = factory();
+    root['Chartist.plugins.fillDonut'] = factory(root.Chartist);
   }
-}(this, function() {
+}(this, function(Chartist) {
 /**
  * Chartist.js plugin to pre fill donuts with animations
  * author: moxx
@@ -48,7 +48,7 @@
                             [].forEach.call(el.querySelectorAll('animate'), function(node) {
                                 node.parentNode.removeChild(node);
                             });
-                            
+
                             el.removeAttribute('stroke-dashoffset');
                         });
 
@@ -127,7 +127,7 @@
                                 left: (cWidth - wWidth) + item.offsetX + "px",
                             }
                         };
-        
+
                         Object.assign($wrapper.style, style[item.position]);
                     });
                 });
@@ -139,5 +139,3 @@
 
 return Chartist.plugins.fillDonut;
 }));
-
-//# sourceMappingURL=chartist-plugin-fill-donut.js.map
