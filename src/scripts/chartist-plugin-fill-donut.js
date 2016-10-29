@@ -31,7 +31,7 @@
                             $svg = $chart.querySelector('svg');
                         }
 
-                        var $clone = data.group._node.cloneNode(true); // jshint ignore:line
+                        var $clone = data.group._node.cloneNode(true);
                         options.fillClass.split(" ").forEach(function (className) {
                             $clone.setAttribute('class', $clone.getAttribute('class') + ' ' + className);
                         });
@@ -125,7 +125,7 @@
                             }
                         };
 
-                        Object.assign($wrapper.style, style[item.position]);
+                        Chartist.extend($wrapper.style, style[item.position]);
                     });
                 });
             }
