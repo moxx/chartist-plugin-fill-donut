@@ -10,7 +10,8 @@ Please visit http://gionkunz.github.io/chartist-js/plugins.html for more informa
 
 # FillDonut plugin installation
 `bower install chartist-plugin-fill-donut --save`
-
+`npm install chartist-plugin-fill-donut --save`
+ 
 manual
 ```
 download https://github.com/moxx/chartist-plugin-fill-donut/archive/master.zip
