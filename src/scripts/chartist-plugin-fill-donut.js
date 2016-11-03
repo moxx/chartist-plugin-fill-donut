@@ -1,134 +1,120 @@
 /**
- * Chartist.js plugin to pre fill donuts with animations
+ * Chartist.js plugin to pre fill donouts with animations
  * author: moxx
  * author-url: https://github.com/moxx/chartist-plugin-fill-donut
  *
  */
-(function (document, Chartist) {
+(function(window, document, Chartist) {
     'use strict';
 
     var defaultOptions = {
         fillClass: 'ct-fill-donut',
-        label: {
-            html: 'div',
-            class: 'ct-fill-donut-label'
+        label : {
+            html: '<div></div>',
+            class: 'ct-fill-donut-label test'
         },
-        items: [{}]
+        items : [{}]
     };
 
     Chartist.plugins = Chartist.plugins || {};
-    Chartist.plugins.fillDonut = function (options) {
+    Chartist.plugins.fillDonut = function(options) {
         options = Chartist.extend({}, defaultOptions, options);
-        return function fillDonut(chart) {
-            if (chart instanceof Chartist.Pie) {
-                var $chart = chart.container;
-                $chart.style.position = 'relative';
+        return function fillDonut(chart){
+            if(chart instanceof Chartist.Pie) {
+                var $chart = angular.element(chart.container);
+                $chart.css('position', 'relative');
                 var $svg;
 
-                function drawDonut(data) { // jshint ignore:line
-                    if (data.type === 'slice') {
-                        if (data.index === 0) {
-                            $svg = $chart.querySelector('svg');
+                chart.on('draw', function(data) {
+                    if(data.type === 'slice'){
+                        if(data.index === 0){
+                            $svg = $chart.find('svg').eq(0);
                         }
 
-                        var $clone = data.group._node.cloneNode(true);
-                        options.fillClass.split(" ").forEach(function (className) {
-                            $clone.setAttribute('class', $clone.getAttribute('class') + ' ' + className);
+                        var $clone = angular.element(angular.element(data.group._node).clone());
+                        $clone.attr('class', $clone.attr('class') + ' ' + options.fillClass);
+
+                        angular.forEach($clone.find('path'), function(value){
+                            angular.element(value).find('animate').remove();
+                            angular.element(value).removeAttr('stroke-dashoffset');
                         });
-
-                        [].forEach.call($clone.querySelectorAll('path'), function (el) {
-                            [].forEach.call(el.querySelectorAll('animate'), function (node) {
-                                node.parentNode.removeChild(node);
-                            });
-
-                            el.removeAttribute('stroke-dashoffset');
-                        });
-
-                        $svg.insertBefore($clone, $svg.childNodes[0]);
-
+                        $svg.prepend($clone);
                     }
-                }
-
-                chart.on('draw', function (data) {
-                    drawDonut(data);
                 });
 
-                chart.on('created', function (data) {
+                chart.on('created', function(data){
                     var itemIndex = 0;
 
-                    if (chart.options.fillDonutOptions) {
+                    if(chart.options.fillDonutOptions){
                         options = Chartist.extend({}, options, chart.options.fillDonutOptions);
-                        drawDonut(data);
                     }
 
-                    [].forEach.call(options.items, function (thisItem) {
-                        var $wrapper = document.createElement(options.label.html);
-                        options.label.class.split(" ").forEach(function (className) {
-                             if ($wrapper.classList) {
-                                 $wrapper.classList.add(className);
-                             } else {
-                                 $wrapper.className += ' ' + className;
-                             }
-                        });
-                        var item = Chartist.extend({}, {
-                            class: '',
+                    angular.forEach(options.items, function(value, key){
+                        var $wrapper =  angular.element(options.label.html).addClass(options.label.class);
+                        var item = angular.extend({}, {
+                            class : '',
                             id: '',
-                            content: 'fillText',
+                            content : 'fillText',
                             position: 'center', //bottom, top, left, right
                             offsetY: 0, //top, bottom in px
                             offsetX: 0 //left, right in px
-                        }, thisItem);
+                        }, value);
 
+                        var content = angular.element();
 
-                        if (item.id.length > 0) {
-                            $wrapper.setAttribute('id', item.id);
+                        if(item.id.length > 0){
+                            $wrapper.attr('id', item.id);
                         }
-                        if (item.class.length > 0) {
-                            $wrapper.setAttribute('class', item.class);
+                        if(item.class.length > 0){
+                            $wrapper.addClass('class', item.class);
                         }
 
-                        [].forEach.call($chart.querySelectorAll('*[data-fill-index$="fdid-' + itemIndex + '"]'), function (node) {
-                            node.parentNode.removeChild(node);
-                        });
-                        $wrapper.setAttribute('data-fill-index', 'fdid-' + itemIndex);
+                        $chart.find('*[data-fill-index$="fdid-'+itemIndex+'"]').remove();
+                        $wrapper.attr('data-fill-index','fdid-'+itemIndex);
                         itemIndex += 1;
 
-                        $wrapper.insertAdjacentHTML('beforeend', item.content);
-                        $wrapper.style.position = 'absolute';
-                        $chart.appendChild($wrapper);
+                        $wrapper.append(item.content).css({
+                            position : 'absolute'
+                        });
 
-                        var cWidth = Math.ceil($chart.offsetWidth / 2);
-                        var cHeight = Math.ceil($chart.clientHeight / 2);
-                        var wWidth = Math.ceil($wrapper.offsetWidth / 2);
-                        var wHeight = Math.ceil($wrapper.clientHeight / 2);
+                        $chart.append($wrapper);
+
+
+                        var cWidth = $chart[0].clientWidth / 2;
+                        var cHeight = $chart[0].clientHeight / 2;
+                        var wWidth = $wrapper[0].clientWidth / 2;
+                        var wHeight = $wrapper[0].clientHeight / 2;
 
                         var style = {
-                            bottom: {
-                                bottom: 0 + item.offsetY + "px",
-                                left: (cWidth - wWidth) + item.offsetX + "px"
+                            bottom : {
+                                bottom : (0 + item.offsetY) + 'px',
+                                left: (cWidth - wWidth) + item.offsetX + 'px',
                             },
-                            top: {
-                                top: 0 + item.offsetY + "px",
-                                left: (cWidth - wWidth) + item.offsetX + "px"
+                            top : {
+                                top : 0  + item.offsetY + 'px',
+                                left: (cWidth - wWidth) + item.offsetX + 'px',
                             },
-                            left: {
-                                top: (cHeight - wHeight) + item.offsetY + "px",
-                                left: 0 + item.offsetX + "px"
+                            left : {
+                                top : (cHeight - wHeight) + item.offsetY + 'px',
+                                left: 0 + item.offsetX + 'px',
                             },
-                            right: {
-                                top: (cHeight - wHeight) + item.offsetY + "px",
-                                right: 0 + item.offsetX + "px"
+                            right : {
+                                top : (cHeight - wHeight) + item.offsetY + 'px',
+                                right: 0 + item.offsetX + 'px',
                             },
-                            center: {
-                                top: (cHeight - wHeight) + item.offsetY + "px",
-                                left: (cWidth - wWidth) + item.offsetX + "px"
+                            center : {
+                                top : (cHeight - wHeight) + item.offsetY + 'px',
+                                left: (cWidth - wWidth) + item.offsetX + 'px',
                             }
                         };
 
-                        Chartist.extend($wrapper.style, style[item.position]);
+                        $wrapper.css(style[item.position]);
                     });
                 });
             }
         };
     };
-}(document, Chartist)); // jshint ignore:line
+
+}(window, document, Chartist));
+
+//# sourceMappingURL=chartist-plugin-fill-donut.js.map
