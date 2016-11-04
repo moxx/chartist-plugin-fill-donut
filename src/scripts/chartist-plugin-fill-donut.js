@@ -47,7 +47,7 @@
                         $svg.insertBefore($clone, $svg.childNodes[0]);
 
                     }
-                }
+                };
 
                 chart.on('draw', function (data) {
                     drawDonut(data);
