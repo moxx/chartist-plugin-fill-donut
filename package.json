@@ -1,6 +1,6 @@
 {
   "name": "chartist-plugin-fill-donut",
-  "version": "0.2.0",
+  "version": "0.1.4",
   "description": "",
   "main": "./dist/chartist-plugin-fill-donut.js",
   "dependencies": {},
