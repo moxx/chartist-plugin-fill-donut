@@ -20,5 +20,10 @@
     "test": "./node_modules/jshint/bin/jshint ./src/scripts/chartist-plugin-fill-donut.js"
   },
   "author": "moxx",
-  "license": "MIT"
+  "license": "MIT",
+  "homepage": "https://github.com/moxx/chartist-plugin-fill-donut",
+  "bugs": {
+    "url": "https://github.com/moxx/chartist-plugin-fill-donut/issues",
+    "email": "mo@sbg.at"
+  }
 }
