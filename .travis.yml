@@ -1,5 +1,14 @@
 language: node_js
 node_js:
-  - 6
+- 6
 script:
-  - npm test
+- npm test
+deploy:
+  provider: npm
+  email: mario@mookey.at
+  api_key:
+    secure: F4q4atsXz+4n0man9ae3/I9XrQAnj8MLBukPLf+qHjf+DG0QJ+Y6odHslsbcy8jC+JQDU+af2wRfJ9GLvpXiYzuMGofN+xX588EHCAEVTT+cxlI7P8mO/N6zDAnQJFTHvu6gVKFA1KbKQSHhWdxkB9HO+uB7grQ0PnYUQC+pKOfuw4p48BRRwtudizdpun6gsy8Hje7gnopd9NGoglavmf5C35GFOGLpETfa+hUgq4OTywKzYbvA9Dbje8XkKOX9GppJp8wC7IhGX5PuYtYgZJ+C7Wx47teOwK6ZVJSi4jClbch1CUotcY/J5xzZHYE3S88B91tq/WVskdyUvkyj894GacwJc10hNp0FYumx5Y0XZuKpcZZzSRXSNL728zUu0QFYTuW73Qf0SEQtU1T9NaCEgro3UnUWHJcJW0tJUC+FuQEI1XD4MmU07kE+3BtaKJto/CzoxDUU+o+TLI479yQxzVBEPpqao0U3MS4rJMC6X2nSHeTKxwBRJxs4BGtB2Dyhcf3uQb4QFcdIstRsD7ZgKdl7dM7BbBkateATe7lcsRnmBlh3yq7TOftVbFeycnmVlYd8j6K9Ujxc2rAY0yikW6vrvwS2+ZUqjA1P6KKHqUeRTO6rJ0Ir/ywBoq8bgzqEYJp8MQ8aiaz2deauvv6595yrigNjFMQ4sk4Nc7I=
+  on:
+    tags: true
+    repo: moxx/chartist-plugin-fill-donut
+    branch: develop
