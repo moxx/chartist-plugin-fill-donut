@@ -36,9 +36,8 @@
 
                 var drawDonut = function(data) {
                     if (data.type === 'slice') {
-                        if (data.index === 0) {
-                            $svg = $chart.querySelector('svg');
-                        }
+                        // Only set svg when not yet set
+                        $svg = $svg || $chart.querySelector('svg');
 
                         var $clone = data.group._node.cloneNode(true);
                         options.fillClass.split(" ").forEach(function (className) {
